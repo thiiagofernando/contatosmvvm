@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Contatos App',
         theme: ThemeData(
-          primarySwatch: Colors.red,
+          primarySwatch: Colors.blueGrey,
           useMaterial3: false,
         ),
         home: const ContatoListView(),

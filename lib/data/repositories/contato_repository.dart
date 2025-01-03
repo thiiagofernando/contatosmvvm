@@ -1,5 +1,6 @@
 import '../database/database_helper.dart';
 import '../../domain/models/contato.dart';
+import 'package:uuid/uuid.dart';
 
 class ContatoRepository {
   final DatabaseHelper _databaseHelper = DatabaseHelper();
@@ -19,22 +20,17 @@ class ContatoRepository {
 
   Future<void> insertContato(Contato contato) async {
     final box = await _databaseHelper.box;
-    await box.add(contato.toMap());
+    contato.id = const Uuid().v4();
+    await box.put(contato.id, contato.toMap());
   }
 
   Future<void> updateContato(Contato contato) async {
     final box = await _databaseHelper.box;
-    final index = box.values.toList().indexWhere((e) => e['id'] == contato.id);
-    if (index != -1) {
-      await box.putAt(index, contato.toMap());
-    }
+    await box.put(contato.id, contato.toMap());
   }
 
-  Future<void> deleteContato(int id) async {
+  Future<void> deleteContato(String id) async {
     final box = await _databaseHelper.box;
-    final index = box.values.toList().indexWhere((e) => e['id'] == id);
-    if (index != -1) {
-      await box.deleteAt(index);
-    }
+    await box.delete(id);
   }
 }

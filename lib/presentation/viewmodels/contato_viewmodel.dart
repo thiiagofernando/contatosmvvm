@@ -28,6 +28,11 @@ class ContatoViewModel extends ChangeNotifier {
     await loadContatos();
   }
 
+  Future<void> removeContato(String id) async {
+    await _repository.deleteContato(id);
+    await loadContatos();
+  }
+
   Future<void> updateContato(Contato contato) async {
     await _repository.updateContato(contato);
     await loadContatos();

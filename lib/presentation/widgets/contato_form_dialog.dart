@@ -66,12 +66,27 @@ class ContatoFormDialogState extends State<ContatoFormDialog> {
           onPressed: () => Navigator.pop(context),
           child: const Text('Cancelar'),
         ),
+        Visibility(
+          visible: widget.contato != null,
+          child: TextButton(
+            onPressed: _deleteContato,
+            child: const Text('Excluir'),
+          ),
+        ),
         ElevatedButton(
           onPressed: _saveContato,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+          ),
           child: Text(widget.contato == null ? 'Salvar' : 'Alterar'),
         ),
       ],
     );
+  }
+
+  void _deleteContato() {
+    Provider.of<ContatoViewModel>(context, listen: false).removeContato(widget.contato?.id ?? "");
+    Navigator.pop(context);
   }
 
   void _saveContato() {
